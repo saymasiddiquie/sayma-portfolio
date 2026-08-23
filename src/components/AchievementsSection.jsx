@@ -18,6 +18,8 @@ export default function AchievementsSection() {
   const { achievements } = portfolioData;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   const activeAchievement = achievements[currentIndex] || achievements[0];
 
@@ -34,6 +36,30 @@ export default function AchievementsSection() {
   const handleSelectChapter = (index) => {
     setActiveImageIndex(0);
     setCurrentIndex(index);
+  };
+
+  // Touch swipe gesture handlers for mobile
+  const minSwipeDistance = 45;
+
+  const onTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  };
+
+  const onTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrev();
+    }
   };
 
   const currentImages = activeAchievement.images && activeAchievement.images.length > 0
@@ -61,7 +87,7 @@ export default function AchievementsSection() {
       </div>
 
       {/* Quick Chapter Selector Tabs */}
-      <div className="flex flex-wrap items-center justify-center gap-2.5 mb-10">
+      <div className="flex flex-wrap items-center justify-center gap-2.5 mb-8">
         {achievements.map((item, idx) => {
           const isActive = idx === currentIndex;
           return (
@@ -82,11 +108,16 @@ export default function AchievementsSection() {
       </div>
 
       {/* BIG SPOTLIGHT HERO SHOWCASE CARD */}
-      <div className="relative">
+      <div
+        className="relative select-none"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         {/* Ambient Glow Background */}
         <div className="absolute -inset-2 bg-gradient-to-r from-amber-500/20 via-orange-500/10 to-amber-500/20 rounded-[36px] blur-2xl opacity-75 pointer-events-none" />
 
-        <div className="relative rounded-[32px] overflow-hidden glass-panel border-2 border-amber-500/50 bg-gradient-to-br from-[#0e1322] via-[#090d18] to-[#060810] p-6 sm:p-8 lg:p-10 shadow-2xl shadow-amber-500/15">
+        <div className="relative rounded-[32px] overflow-hidden glass-panel border-2 border-amber-500/50 bg-gradient-to-br from-[#0e1322] via-[#090d18] to-[#060810] p-5 sm:p-8 lg:p-10 shadow-2xl shadow-amber-500/15">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
             
             {/* Left Column: Big Showcase Image / Certificate (5 cols) */}
@@ -113,8 +144,27 @@ export default function AchievementsSection() {
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/20 to-transparent pointer-events-none" />
                 )}
 
+                {/* Direct Image Overlay Swap Buttons (Left & Right Arrows) */}
+                <button
+                  onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-slate-950/85 border border-amber-500/40 text-amber-400 hover:text-white hover:bg-amber-500 hover:border-amber-400 shadow-xl backdrop-blur-md transition-all active:scale-95 z-20 cursor-pointer"
+                  title="Swap to Previous Chapter"
+                  aria-label="Previous Chapter"
+                >
+                  <ChevronLeft className="w-5 h-5" />
+                </button>
+
+                <button
+                  onClick={(e) => { e.stopPropagation(); handleNext(); }}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 p-2.5 sm:p-3 rounded-full bg-slate-950/85 border border-amber-500/40 text-amber-400 hover:text-white hover:bg-amber-500 hover:border-amber-400 shadow-xl backdrop-blur-md transition-all active:scale-95 z-20 cursor-pointer"
+                  title="Swap to Next Chapter"
+                  aria-label="Next Chapter"
+                >
+                  <ChevronRight className="w-5 h-5" />
+                </button>
+
                 {/* Top Badges on Image */}
-                <div className="absolute top-4 left-4 flex flex-wrap gap-2">
+                <div className="absolute top-4 left-4 flex flex-wrap gap-2 pointer-events-none">
                   <span className="px-3.5 py-1.5 rounded-full text-xs font-black bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 flex items-center gap-1.5 shadow-lg">
                     <Award className="w-3.5 h-3.5 fill-current" />
                     CHAPTER #{activeAchievement.id}
@@ -122,13 +172,13 @@ export default function AchievementsSection() {
                 </div>
 
                 {activeAchievement.category && (
-                  <span className="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-900/80 backdrop-blur-md text-amber-300 border border-amber-500/30">
+                  <span className="absolute top-4 right-4 px-3 py-1 rounded-full text-[11px] font-bold bg-slate-900/80 backdrop-blur-md text-amber-300 border border-amber-500/30 pointer-events-none">
                     {activeAchievement.category.split('|')[0].trim()}
                   </span>
                 )}
 
                 {/* Bottom Overlay bar on Image */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-slate-300 bg-slate-950/85 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-800">
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-slate-300 bg-slate-950/85 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-800 pointer-events-none">
                   <span className="flex items-center gap-1.5 font-medium truncate">
                     <Calendar className="w-3.5 h-3.5 text-amber-400 shrink-0" />
                     {activeAchievement.time}
@@ -160,6 +210,24 @@ export default function AchievementsSection() {
                   </span>
                 </div>
               )}
+
+              {/* Mobile Dedicated Swap Navigation Buttons Bar */}
+              <div className="flex lg:hidden items-center gap-2.5 pt-1">
+                <button
+                  onClick={handlePrev}
+                  className="flex-1 py-3 px-4 rounded-2xl bg-slate-900/90 border border-slate-800 hover:border-amber-500/50 text-amber-400 font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg active:scale-95 transition-all cursor-pointer"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span>Prev Chapter</span>
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="flex-1 py-3 px-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20 active:scale-95 transition-all cursor-pointer"
+                >
+                  <span>Next Chapter</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Right Column: Big Showcase Details (7 cols) */}
