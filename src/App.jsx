@@ -12,107 +12,64 @@ export default function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const audioRef = useRef(null);
 
-  // Robust universal audio engine for Desktop, Laptop, and Mobile
+  // Global reliable audio engine for all browsers (Desktop, Laptop, Mobile)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = 0.25; // 25% comfortable ambient sound
+    audio.volume = 0.25;
     audio.muted = false;
 
-    // Function to forcefully unlock and play audio with sound
-    const forcePlayWithSound = () => {
+    // Function to play sound directly inside a genuine user activation gesture
+    const playSound = () => {
       if (!audio || !soundEnabled) return;
       audio.muted = false;
       audio.volume = 0.25;
-
-      // Resume AudioContext if suspended (Web Audio API)
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (AudioContextClass) {
-        try {
-          const ctx = new AudioContextClass();
-          if (ctx.state === 'suspended') {
-            ctx.resume();
-          }
-        } catch (e) {}
-      }
 
       const playPromise = audio.play();
       if (playPromise !== undefined) {
         playPromise
           .then(() => {
-            audio.muted = false;
+            // Audio is now actively playing with sound!
+            // Clean up the global gesture listeners once playback has started
+            cleanUpListeners();
           })
           .catch(() => {
-            // If browser blocks unmuted audio on load, start stream and unmute on mousemove/scroll
-            audio.muted = true;
-            audio.play().then(() => {
-              const unmuteImmediate = () => {
-                if (audio && soundEnabled) {
-                  audio.muted = false;
-                  audio.volume = 0.25;
-                }
-                removeUnlockListeners();
-              };
-
-              const unlockEvents = ['mousemove', 'pointermove', 'wheel', 'scroll', 'click', 'touchstart', 'keydown'];
-              unlockEvents.forEach((evt) => {
-                window.addEventListener(evt, unmuteImmediate, { capture: true, once: true });
-              });
-
-              function removeUnlockListeners() {
-                unlockEvents.forEach((evt) => {
-                  window.removeEventListener(evt, unmuteImmediate, { capture: true });
-                });
-              }
-            }).catch(() => {});
+            // Will retry on next user tap/click
           });
       }
     };
 
+    // Attempt to play on mount (if browser allows it)
     if (soundEnabled) {
-      forcePlayWithSound();
+      playSound();
     } else {
       audio.pause();
     }
 
-    // Capture all desktop & mobile triggers (cursor move, wheel, touch, click, scroll)
-    const gestureEvents = [
-      'mousemove',
-      'pointermove',
-      'mouseenter',
-      'mouseover',
-      'wheel',
-      'scroll',
-      'click',
-      'pointerdown',
-      'pointerup',
-      'touchstart',
-      'touchend',
-      'keydown',
-      'focus'
-    ];
+    // Only genuine user activation gestures accepted by Chrome / Safari / Edge / Mobile
+    const validActivationEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
 
-    const onUserGesture = () => {
-      if (soundEnabled && audio) {
-        audio.muted = false;
-        audio.volume = 0.25;
-        if (audio.paused) {
-          audio.play().catch(() => {});
-        }
+    const handleUserGesture = () => {
+      if (soundEnabled) {
+        playSound();
       }
     };
 
-    gestureEvents.forEach((evt) => {
-      document.addEventListener(evt, onUserGesture, { capture: true, passive: true });
-      window.addEventListener(evt, onUserGesture, { capture: true, passive: true });
+    validActivationEvents.forEach((evt) => {
+      document.addEventListener(evt, handleUserGesture, { capture: true, passive: true });
+      window.addEventListener(evt, handleUserGesture, { capture: true, passive: true });
     });
 
-    return () => {
-      gestureEvents.forEach((evt) => {
-        document.removeEventListener(evt, onUserGesture, { capture: true });
-        window.removeEventListener(evt, onUserGesture, { capture: true });
+    function cleanUpListeners() {
+      validActivationEvents.forEach((evt) => {
+        document.removeEventListener(evt, handleUserGesture, { capture: true });
+        window.removeEventListener(evt, handleUserGesture, { capture: true });
       });
+    }
+
+    return () => {
+      cleanUpListeners();
     };
   }, [soundEnabled]);
 
