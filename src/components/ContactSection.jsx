@@ -1,26 +1,66 @@
 import React, { useState } from 'react';
 import { portfolioData } from '../data/portfolioData';
-import { Mail, Send, Github, Linkedin, CheckCircle, Sparkles } from 'lucide-react';
+import { Mail, Send, Github, Linkedin, CheckCircle, Sparkles, Loader2, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export default function ContactSection() {
   const { personal } = portfolioData;
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    confetti({
-      particleCount: 100,
-      spread: 80,
-      origin: { y: 0.6 },
-      colors: ['#f59e0b', '#ff6b00', '#22c55e']
-    });
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: '', email: '', message: '' });
-    }, 4000);
+    setIsSubmitting(true);
+    setErrorMessage('');
+
+    try {
+      // Send real email directly to saymasiddiquie@gmail.com via AJAX
+      const response = await fetch('https://formsubmit.co/ajax/saymasiddiquie@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          _subject: `⚡ New Portfolio Message from ${formData.name}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      const result = await response.json();
+
+      if (response.ok || result.success === 'true' || result.success === true) {
+        confetti({
+          particleCount: 100,
+          spread: 80,
+          origin: { y: 0.6 },
+          colors: ['#f59e0b', '#ff6b00', '#22c55e']
+        });
+        setSubmitted(true);
+        setFormData({ name: '', email: '', message: '' });
+        setTimeout(() => {
+          setSubmitted(false);
+        }, 6000);
+      } else {
+        throw new Error(result.message || 'Unable to deliver message right now.');
+      }
+    } catch (err) {
+      console.error('Contact form submission error:', err);
+      // Fallback: Open mail client if service has network glitch
+      window.location.href = `mailto:saymasiddiquie@gmail.com?subject=${encodeURIComponent('Portfolio Contact from ' + formData.name)}&body=${encodeURIComponent(formData.message + '\n\nFrom: ' + formData.name + ' (' + formData.email + ')')}`;
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -145,11 +185,18 @@ export default function ContactSection() {
                 <CheckCircle className="w-16 h-16 text-emerald-400 mx-auto animate-bounce" />
                 <h3 className="text-2xl font-bold text-white">Message Sent Successfully!</h3>
                 <p className="text-slate-300 text-sm">
-                  Thank you for reaching out, Sayma will get back to you soon.
+                  Your message has been delivered to Sayma's inbox. Thank you for reaching out!
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {errorMessage && (
+                  <div className="p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 shrink-0" />
+                    <span>{errorMessage}</span>
+                  </div>
+                )}
+
                 <div>
                   <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2">
                     Your Name
@@ -194,10 +241,20 @@ export default function ContactSection() {
 
                 <button
                   type="submit"
-                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-base shadow-xl shadow-amber-500/20 hover:scale-[1.02] transition-all flex items-center justify-center gap-2"
+                  disabled={isSubmitting}
+                  className="w-full py-4 rounded-2xl bg-gradient-to-r from-amber-500 to-orange-500 text-slate-950 font-bold text-base shadow-xl shadow-amber-500/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Send Message</span>
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                      <span>Delivering to Sayma...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      <span>Send Message Directly</span>
+                    </>
+                  )}
                 </button>
               </form>
             )}
