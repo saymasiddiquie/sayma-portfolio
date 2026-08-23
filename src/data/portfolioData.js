@@ -8,7 +8,7 @@ export const portfolioData = {
     university: "Computer Science & Engineering",
     cgpa: "AI / ML Specialization",
     year: "Engineer & Developer",
-    bio: "I'm Sayma Siddiquie, a passionate AI/ML developer specializing in autonomous agents, Model Context Protocol (MCP) tool integrations, intelligent data analysis, and scalable full-stack engineering. I build cutting-edge machine learning models, predictive engines, and data-driven web applications that solve real-world challenges.",
+    bio: "Hi, I'm Sayma Siddiquie — kehte hain agents khud faisla lete hain, par sponsor toh main hoon. (They say agents make their own decisions, but I'm still the one sponsoring the show.)",
     githubAvatar: "https://avatars.githubusercontent.com/u/192993867?v=4",
     socials: {
       github: "https://github.com/saymasiddiquie",
