@@ -23,19 +23,17 @@ export default function AboutSection() {
 
   return (
     <section id="about" className="py-24 relative z-20 container mx-auto px-6 max-w-6xl">
-      <div className="text-center mb-16">
-        <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs md:text-sm font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 shadow-lg shadow-amber-500/10 mb-4">
+      {/* Section Header */}
+      <div className="text-center mb-12">
+        <span className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-xs md:text-sm font-extrabold uppercase tracking-widest text-amber-400 bg-amber-500/10 border border-amber-500/30 shadow-lg shadow-amber-500/10">
           <User className="w-4 h-4 text-amber-400" />
           GET TO KNOW ME • BACKGROUND & EXPERIENCE
         </span>
-        <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-amber-400 tracking-wide uppercase mt-2 mb-4">
-          ABOUT ME.
+        <h2 className="text-5xl md:text-6xl lg:text-7xl font-black text-white mt-5 mb-5 tracking-tight leading-tight">
+          About <span className="gradient-heading">Me</span>
         </h2>
-        <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-white max-w-3xl mx-auto mb-3 leading-snug">
-          Innovating with AI, Autonomous Agents & Data Intelligence
-        </h3>
-        <p className="text-slate-300 text-base md:text-lg max-w-2xl mx-auto leading-relaxed">
-          {personal.tagline}
+        <p className="text-slate-300 text-lg md:text-xl max-w-3xl mx-auto font-medium leading-relaxed">
+          Innovating with AI, Autonomous Agents & Data Intelligence. {personal.tagline}
         </p>
       </div>
 
