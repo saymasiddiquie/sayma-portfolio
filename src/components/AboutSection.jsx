@@ -112,41 +112,41 @@ export default function AboutSection() {
 
         {/* Right Column: Bio & Stat Cards */}
         <div className="lg:col-span-7 space-y-8">
-          <div className="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 space-y-5 bg-gradient-to-br from-[#0e1322]/90 via-[#090d18] to-[#060810] shadow-2xl">
-            <h3 className="text-xl sm:text-2xl font-bold text-white leading-snug">
-              Hi, I'm <span className="text-amber-400">Sayma Siddiquie</span> — <span className="text-slate-200 font-medium italic">kehte hain agents khud faisla lete hain, par sponsor toh main hoon.</span> <span className="text-xs sm:text-sm text-slate-400 block sm:inline mt-1 sm:mt-0 font-normal">(They say agents make their own decisions, but I'm still the one sponsoring the show.)</span>
+          <div className="glass-panel p-6 sm:p-9 md:p-10 rounded-[32px] border-2 border-amber-500/30 space-y-6 bg-gradient-to-br from-[#0e1322] via-[#090d18] to-[#060810] shadow-2xl shadow-amber-500/10">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-snug tracking-tight">
+              Hi, I'm <span className="text-amber-400">Sayma Siddiquie</span> — <span className="text-amber-200/90 font-semibold italic">kehte hain agents khud faisla lete hain, par sponsor toh main hoon.</span> <span className="text-sm sm:text-base md:text-lg text-slate-400 block sm:inline mt-1.5 sm:mt-0 font-normal">(They say agents make their own decisions, but I'm still the one sponsoring the show.)</span>
             </h3>
 
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
-              I don't just write code — <span className="text-amber-300 font-semibold">main code likhti hoon, aur code chalta hai</span>. I build AI systems that think, decide, and act: autonomous agents, tools wired together through the Model Context Protocol (MCP), and machine learning models that don't just perform well in a demo — <span className="text-amber-300 font-semibold">ye dosti hum nahi todenge</span> energy, they hold up in production too.
+            <p className="text-slate-200 leading-relaxed text-base sm:text-lg md:text-xl font-normal">
+              I don't just write code — <span className="text-amber-300 font-bold">main code likhti hoon, aur code chalta hai</span>. I build AI systems that think, decide, and act: autonomous agents, tools wired together through the Model Context Protocol (MCP), and machine learning models that don't just perform well in a demo — <span className="text-amber-300 font-bold">ye dosti hum nahi todenge</span> energy, they hold up in production too.
             </p>
 
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
-              I'm an AI/ML undergrad with a rock-solid base in <strong className="text-white">Python, SQL, OOP, and Data Structures & Algorithms</strong>. Picture it like this: DSA is my background score — you may not always notice it, but every good scene needs one. Here's what I've directed so far:
+            <p className="text-slate-200 leading-relaxed text-base sm:text-lg md:text-xl font-normal">
+              I'm an AI/ML undergrad with a rock-solid base in <strong className="text-white font-black">Python, SQL, OOP, and Data Structures & Algorithms</strong>. Picture it like this: DSA is my background score — you may not always notice it, but every good scene needs one. Here's what I've directed so far:
             </p>
 
-            {/* Bullet points */}
-            <div className="space-y-3 pl-3 sm:pl-4 border-l-2 border-amber-500/50 my-4 bg-slate-900/40 p-3 rounded-r-2xl">
-              <div className="text-xs sm:text-sm text-slate-200">
-                <span className="font-bold text-amber-400">Multi-agent AI systems</span> — <span className="italic">ek akela thak jaayega, milkar agents karega kamaal.</span> They coordinate. They deliver. No drama (well, minimal).
+            {/* Structured Bullet Points */}
+            <div className="space-y-4 pl-4 sm:pl-5 border-l-4 border-amber-500 my-6 bg-slate-900/60 p-4 sm:p-5 rounded-r-3xl border-y border-r border-slate-800">
+              <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
+                <span className="font-extrabold text-amber-400">Multi-agent AI systems</span> — <span className="italic text-slate-200 font-medium">ek akela thak jaayega, milkar agents karega kamaal.</span> They coordinate. They deliver. No drama (well, minimal).
               </div>
-              <div className="text-xs sm:text-sm text-slate-200">
-                <span className="font-bold text-amber-400">ETL pipelines</span> — moving and cleaning data with the confidence of a hero entry: dramatic, on time, no unnecessary flashbacks.
+              <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
+                <span className="font-extrabold text-amber-400">ETL pipelines</span> — moving and cleaning data with the confidence of a hero entry: dramatic, on time, no unnecessary flashbacks.
               </div>
-              <div className="text-xs sm:text-sm text-slate-200">
-                <span className="font-bold text-amber-400">Cloud workflows on GCP</span> — built to scale, so I sleep at night while the pipeline does the item number.
+              <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
+                <span className="font-extrabold text-amber-400">Cloud workflows on GCP</span> — built to scale, so I sleep at night while the pipeline does the item number.
               </div>
-              <div className="text-xs sm:text-sm text-slate-200">
-                <span className="font-bold text-amber-400">Predictive models & data-driven web apps</span> — solving real problems, not just chasing applause.
+              <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
+                <span className="font-extrabold text-amber-400">Predictive models & data-driven web apps</span> — solving real problems, not just chasing applause.
               </div>
             </div>
 
-            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
-              I take messy, real-world chaos and turn it into something that actually works — <strong className="text-amber-300">smart, stable, and thoda swag ke saath</strong>.
+            <p className="text-slate-200 leading-relaxed text-base sm:text-lg md:text-xl font-normal">
+              I take messy, real-world chaos and turn it into something that actually works — <strong className="text-amber-300 font-black">smart, stable, and thoda swag ke saath</strong>.
             </p>
 
-            <div className="pt-2">
-              <span className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 border border-amber-500/40 text-amber-300 font-extrabold text-sm sm:text-base shadow-lg shadow-amber-500/10 tracking-wide">
+            <div className="pt-3">
+              <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-2xl bg-amber-500/20 border-2 border-amber-500/50 text-amber-300 font-black text-base sm:text-lg md:text-xl shadow-xl shadow-amber-500/15 tracking-wide">
                 ✨ Picture abhi baaki hai, mere dost. 🎬
               </span>
             </div>
