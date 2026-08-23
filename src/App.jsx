@@ -12,56 +12,57 @@ export default function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const audioRef = useRef(null);
 
-  // Initialize and play ambient audio automatically on open / first user interaction
+  // Synchronize audio element state with soundEnabled and mobile gesture unlock
   useEffect(() => {
-    if (!audioRef.current) {
-      const audio = new Audio('/sounds/commercial-upbeat-energetic-rock-354637.mp3');
-      audio.loop = true;
-      audio.volume = 0.2; // 20% volume comfortable ambient sound
-      audioRef.current = audio;
-    }
+    const audio = audioRef.current;
+    if (!audio) return;
 
-    const startAudio = () => {
-      if (audioRef.current && soundEnabled) {
-        audioRef.current.play().catch(() => {
-          // Autoplay blocked by browser policy until interaction
+    audio.volume = 0.2; // 20% comfortable ambient volume
+
+    const playAudio = () => {
+      if (audio && soundEnabled) {
+        audio.play().catch(() => {
+          // Will unblock on first touch/gesture
         });
       }
     };
 
-    // Try playing immediately
     if (soundEnabled) {
-      startAudio();
-    } else if (audioRef.current) {
-      audioRef.current.pause();
+      playAudio();
+    } else {
+      audio.pause();
     }
 
-    // Browsers require a user interaction to unblock audio; trigger on first click/touch/scroll
-    const handleFirstInteraction = () => {
-      if (soundEnabled && audioRef.current && audioRef.current.paused) {
-        audioRef.current.play().catch(() => {});
+    // Capture first touch/click/scroll on entire document for mobile browsers
+    const handleGesture = () => {
+      if (audio && soundEnabled && audio.paused) {
+        audio.play().catch(() => {});
       }
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
     };
 
-    window.addEventListener('click', handleFirstInteraction, { once: true });
-    window.addEventListener('touchstart', handleFirstInteraction, { once: true });
-    window.addEventListener('keydown', handleFirstInteraction, { once: true });
-    window.addEventListener('scroll', handleFirstInteraction, { once: true });
+    const events = ['touchstart', 'touchend', 'pointerdown', 'mousedown', 'click', 'scroll'];
+    events.forEach((evt) => {
+      document.addEventListener(evt, handleGesture, { capture: true, passive: true });
+    });
 
     return () => {
-      window.removeEventListener('click', handleFirstInteraction);
-      window.removeEventListener('touchstart', handleFirstInteraction);
-      window.removeEventListener('keydown', handleFirstInteraction);
-      window.removeEventListener('scroll', handleFirstInteraction);
+      events.forEach((evt) => {
+        document.removeEventListener(evt, handleGesture, { capture: true });
+      });
     };
   }, [soundEnabled]);
 
   return (
     <div className="min-h-screen bg-[#07090e] text-slate-100 font-sans selection:bg-amber-500/30 selection:text-amber-300 relative overflow-x-hidden">
+      {/* Hidden Persistent DOM Audio Element */}
+      <audio
+        ref={audioRef}
+        src="/sounds/commercial-upbeat-energetic-rock-354637.mp3"
+        loop
+        preload="auto"
+        playsInline
+      />
+
       {/* Floating Pill Navbar */}
       <FloatingNavbar soundEnabled={soundEnabled} setSoundEnabled={setSoundEnabled} />
 
