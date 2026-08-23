@@ -39,12 +39,12 @@ export default function AboutSection() {
         {/* Left Column: Avatar & Quick Info */}
         <div className="lg:col-span-5 flex flex-col items-center justify-center">
           <div className="relative group w-full max-w-[440px] flex justify-center">
-            <div className="absolute -inset-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 rounded-[36px] blur-2xl opacity-45 group-hover:opacity-80 transition duration-500" />
-            <div className="relative w-80 h-80 sm:w-96 sm:h-96 md:w-[420px] md:h-[420px] lg:w-[440px] lg:h-[440px] rounded-[32px] overflow-hidden glass-panel p-3 border-2 border-amber-500/50 shadow-2xl shadow-amber-500/20">
+            <div className="absolute -inset-3 sm:-inset-4 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 rounded-[32px] sm:rounded-[36px] blur-2xl opacity-45 group-hover:opacity-80 transition duration-500" />
+            <div className="relative w-64 h-64 sm:w-80 sm:h-80 md:w-[380px] md:h-[380px] lg:w-[440px] lg:h-[440px] max-w-full aspect-square rounded-[28px] sm:rounded-[32px] overflow-hidden glass-panel p-2.5 sm:p-3 border-2 border-amber-500/50 shadow-2xl shadow-amber-500/20">
               <img
                 src={personal.githubAvatar}
                 alt={personal.name}
-                className="w-full h-full object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105 group-hover:brightness-105"
+                className="w-full h-full object-cover rounded-[20px] sm:rounded-[24px] transition-transform duration-700 group-hover:scale-105 group-hover:brightness-105"
               />
             </div>
           </div>

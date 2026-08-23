@@ -124,45 +124,45 @@ export default function HeroSection() {
       {/* Main Hero Content */}
       <div className="relative z-20 container mx-auto px-6 text-center max-w-4xl">
         {/* Avatar Pill */}
-        <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full glass-panel border border-amber-500/30 mb-8 animate-float">
+        <div className="inline-flex items-center gap-2.5 sm:gap-3 px-3.5 sm:px-4 py-1.5 sm:py-2 rounded-full glass-panel border border-amber-500/30 mb-6 sm:mb-8 animate-float max-w-full">
           <img
             src={portfolioData.personal.githubAvatar}
             alt={portfolioData.personal.name}
-            className="w-8 h-8 rounded-full border border-amber-400 object-cover"
+            className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-amber-400 object-cover shrink-0"
           />
-          <span className="text-sm font-semibold text-amber-400 flex items-center gap-1.5">
-            <Sparkles className="w-4 h-4" /> AI/ML Developer & MCP Specialist
+          <span className="text-xs sm:text-sm font-semibold text-amber-400 flex items-center gap-1.5 truncate">
+            <Sparkles className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" /> AI/ML Developer & MCP Specialist
           </span>
         </div>
 
         {/* Typing Title */}
-        <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-6 min-h-[80px]">
+        <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold tracking-tight text-white mb-4 sm:mb-6 min-h-[48px] sm:min-h-[64px] md:min-h-[80px] leading-tight">
           {displayText}
-          <span className="inline-block w-1.5 h-12 md:h-16 bg-amber-400 ml-2 animate-pulse align-middle" />
+          <span className="inline-block w-1 sm:w-1.5 h-8 sm:h-12 md:h-16 bg-amber-400 ml-1.5 sm:ml-2 animate-pulse align-middle" />
         </h1>
 
         {/* Subtitle */}
-        <p className="text-xl md:text-2xl text-slate-300 font-medium mb-3">
+        <p className="text-lg sm:text-xl md:text-2xl text-slate-300 font-medium mb-2 sm:mb-3">
           {portfolioData.personal.title}
         </p>
 
         {/* Glowing Highlight */}
-        <p className="text-lg md:text-xl text-amber-400 font-semibold mb-10 glow-orange-text">
+        <p className="text-sm sm:text-lg md:text-xl text-amber-400 font-semibold mb-8 sm:mb-10 glow-orange-text max-w-xl mx-auto">
           {portfolioData.personal.subtext}
         </p>
 
         {/* Dynamic Glowing CTA Button */}
-        <div className="relative inline-block mb-14">
+        <div className="relative inline-block mb-10 sm:mb-14 max-w-full">
           {/* Outer Dashed Orbit Circle */}
-          <div className="absolute -inset-4 rounded-full border-2 border-dashed border-amber-500/40 animate-spin-slow pointer-events-none" />
+          <div className="absolute -inset-3 sm:-inset-4 rounded-full border-2 border-dashed border-amber-500/40 animate-spin-slow pointer-events-none" />
 
           <button
             onClick={handleCtaClick}
-            className="relative group px-8 py-4 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-slate-950 font-bold text-lg shadow-xl shadow-amber-500/25 hover:scale-105 transition-all duration-300 flex items-center gap-3 mx-auto"
+            className="relative group px-5 sm:px-8 py-3 sm:py-4 rounded-full bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 text-slate-950 font-bold text-sm sm:text-lg shadow-xl shadow-amber-500/25 hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2 sm:gap-3 mx-auto max-w-full cursor-pointer"
           >
-            <Terminal className="w-5 h-5 text-slate-950 group-hover:rotate-12 transition-transform" />
-            <span>{phrases[phraseIndex]}</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Terminal className="w-4 h-4 sm:w-5 sm:h-5 text-slate-950 group-hover:rotate-12 transition-transform shrink-0" />
+            <span className="truncate">{phrases[phraseIndex]}</span>
+            <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 group-hover:translate-x-1 transition-transform shrink-0" />
           </button>
         </div>
 

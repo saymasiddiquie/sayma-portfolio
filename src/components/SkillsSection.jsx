@@ -94,21 +94,21 @@ export default function SkillsSection() {
       </div>
 
       {/* 4 Stats Cards Row */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto mb-14">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 md:gap-6 max-w-4xl mx-auto mb-10 sm:mb-14">
         {stats.map((st, idx) => {
           const Icon = st.icon;
           return (
             <div
               key={idx}
-              className="glass-panel p-5 rounded-2xl border border-slate-800/80 hover:border-amber-500/40 transition-all duration-300 flex flex-col items-center justify-center text-center group hover:-translate-y-1 shadow-lg"
+              className="glass-panel p-3.5 sm:p-5 rounded-2xl border border-slate-800/80 hover:border-amber-500/40 transition-all duration-300 flex flex-col items-center justify-center text-center group hover:-translate-y-1 shadow-lg"
             >
-              <div className="p-3 rounded-2xl bg-slate-900 border border-slate-800 text-amber-400 mb-3 group-hover:scale-110 transition-transform">
-                <Icon className="w-6 h-6" />
+              <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-slate-900 border border-slate-800 text-amber-400 mb-2 sm:mb-3 group-hover:scale-110 transition-transform">
+                <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
               </div>
-              <span className="text-2xl md:text-3xl font-black text-white mb-1">
+              <span className="text-xl sm:text-2xl md:text-3xl font-black text-white mb-0.5 sm:mb-1">
                 {st.title}
               </span>
-              <span className="text-xs text-slate-400 font-medium">
+              <span className="text-[11px] sm:text-xs text-slate-400 font-medium leading-tight">
                 {st.label}
               </span>
             </div>
@@ -119,30 +119,30 @@ export default function SkillsSection() {
       {/* 3D Tilted Device Container Screen */}
       <div className="relative max-w-5xl mx-auto">
         {/* Outer Glow */}
-        <div className="absolute -inset-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-[40px] blur-2xl pointer-events-none" />
+        <div className="absolute -inset-2 sm:-inset-4 bg-gradient-to-r from-amber-500/20 to-orange-500/20 rounded-[28px] sm:rounded-[40px] blur-xl sm:blur-2xl pointer-events-none" />
 
         {/* Device Frame */}
-        <div className="relative border-4 border-[#5a5f70] bg-[#121622] rounded-[32px] md:rounded-[40px] shadow-2xl overflow-hidden p-3 md:p-6">
+        <div className="relative border-2 sm:border-4 border-[#5a5f70] bg-[#121622] rounded-[24px] sm:rounded-[32px] md:rounded-[40px] shadow-2xl overflow-hidden p-2 sm:p-4 md:p-6">
           {/* Top Window Bar */}
-          <div className="flex items-center justify-between px-4 py-2.5 bg-[#0b0e17] rounded-t-2xl border-b border-slate-800 mb-4">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 rounded-full bg-red-500/80" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-              <div className="w-3 h-3 rounded-full bg-green-500/80" />
+          <div className="flex items-center justify-between px-3 sm:px-4 py-2 sm:py-2.5 bg-[#0b0e17] rounded-t-xl sm:rounded-t-2xl border-b border-slate-800 mb-2 sm:mb-4">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-500/80" />
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-500/80" />
+              <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-500/80" />
             </div>
 
-            <div className="flex items-center gap-2 text-xs text-slate-400 font-mono">
-              <Terminal className="w-4 h-4 text-amber-400" />
-              <span>sayma@portfolio: ~/skills</span>
+            <div className="flex items-center gap-1.5 sm:gap-2 text-[11px] sm:text-xs text-slate-400 font-mono truncate max-w-[200px] sm:max-w-none">
+              <Terminal className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
+              <span className="truncate">sayma@portfolio: ~/skills</span>
             </div>
 
-            <div className="text-xs text-slate-500 font-mono">zsh</div>
+            <div className="text-[10px] sm:text-xs text-slate-500 font-mono">zsh</div>
           </div>
 
           {/* Terminal Content Screen Area */}
           <div
             ref={scrollContainerRef}
-            className="h-[480px] md:h-[540px] overflow-y-auto pr-2 space-y-8 custom-scrollbar bg-[#090c14] p-4 md:p-8 rounded-b-2xl border border-slate-800/80 relative"
+            className="h-[420px] sm:h-[480px] md:h-[540px] overflow-y-auto pr-1 sm:pr-2 space-y-6 sm:space-y-8 custom-scrollbar bg-[#090c14] p-3 sm:p-6 md:p-8 rounded-b-xl sm:rounded-b-2xl border border-slate-800/80 relative"
           >
             {formattedSections.map((sec, secIdx) => (
               <div key={secIdx} className="space-y-4">
