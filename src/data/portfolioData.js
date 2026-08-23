@@ -8,7 +8,7 @@ export const portfolioData = {
     university: "Computer Science & Engineering",
     cgpa: "AI / ML Specialization",
     year: "Engineer & Developer",
-    bio: "Hi, I'm Sayma Siddiquie — kehte hain agents khud faisla lete hain, par sponsor toh main hoon. (They say agents make their own decisions, but I'm still the one sponsoring the show.)",
+    bio: "Hi, I'm Sayma Siddiquie. I build AI systems that think, decide, and act — autonomous agents, tools connected through the Model Context Protocol (MCP), and machine learning models that hold up in production.",
     githubAvatar: "https://avatars.githubusercontent.com/u/192993867?v=4",
     socials: {
       github: "https://github.com/saymasiddiquie",

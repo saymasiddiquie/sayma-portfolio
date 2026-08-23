@@ -113,40 +113,40 @@ export default function AboutSection() {
       <div className="space-y-10 max-w-4xl mx-auto">
         <div className="glass-panel p-7 sm:p-10 md:p-12 rounded-[36px] border-2 border-amber-500/30 space-y-6 bg-gradient-to-br from-[#0e1322] via-[#090d18] to-[#060810] shadow-2xl shadow-amber-500/10">
           <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-snug tracking-tight">
-            Hi, I'm <span className="text-amber-400">Sayma Siddiquie</span> — <span className="text-amber-200/90 font-semibold italic">kehte hain agents khud faisla lete hain, par sponsor toh main hoon.</span> <span className="text-sm sm:text-base md:text-lg text-slate-400 block sm:inline mt-1.5 sm:mt-0 font-normal">(They say agents make their own decisions, but I'm still the one sponsoring the show.)</span>
+            Hi, I'm <span className="text-amber-400">Sayma Siddiquie</span>.
           </h3>
 
           <p className="text-slate-200 leading-relaxed text-base sm:text-lg md:text-xl font-normal">
-            I don't just write code — <span className="text-amber-300 font-bold">main code likhti hoon, aur code chalta hai</span>. I build AI systems that think, decide, and act: autonomous agents, tools wired together through the Model Context Protocol (MCP), and machine learning models that don't just perform well in a demo — <span className="text-amber-300 font-bold">ye dosti hum nahi todenge</span> energy, they hold up in production too.
+            I build AI systems that think, decide, and act — autonomous agents, tools connected through the <span className="text-amber-300 font-semibold">Model Context Protocol (MCP)</span>, and machine learning models that don't just perform well in a demo, but hold up in production.
           </p>
 
           <p className="text-slate-200 leading-relaxed text-base sm:text-lg md:text-xl font-normal">
-            I'm an AI/ML undergrad with a rock-solid base in <strong className="text-white font-black">Python, SQL, OOP, and Data Structures & Algorithms</strong>. Picture it like this: DSA is my background score — you may not always notice it, but every good scene needs one. Here's what I've directed so far:
+            I'm an AI/ML undergraduate with a solid foundation in <strong className="text-white font-bold">Python, SQL, OOP, and Data Structures & Algorithms</strong>. Think of DSA as my background score — you don't always notice it, but every good system needs one running underneath. Here's what I've built so far:
           </p>
 
           {/* Structured Bullet Points */}
           <div className="space-y-4 pl-4 sm:pl-5 border-l-4 border-amber-500 my-6 bg-slate-900/60 p-4 sm:p-6 rounded-r-3xl border-y border-r border-slate-800">
             <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
-              <span className="font-extrabold text-amber-400">Multi-agent AI systems</span> — <span className="italic text-slate-200 font-medium">ek akela thak jaayega, milkar agents karega kamaal.</span> They coordinate. They deliver. No drama (well, minimal).
+              <span className="font-extrabold text-amber-400">Multi-agent AI systems</span> that coordinate intelligently and deliver results with minimal friction
             </div>
             <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
-              <span className="font-extrabold text-amber-400">ETL pipelines</span> — moving and cleaning data with the confidence of a hero entry: dramatic, on time, no unnecessary flashbacks.
+              <span className="font-extrabold text-amber-400">ETL pipelines</span> that move and clean data with precision — reliable, on time, no unnecessary detours
             </div>
             <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
-              <span className="font-extrabold text-amber-400">Cloud workflows on GCP</span> — built to scale, so I sleep at night while the pipeline does the item number.
+              <span className="font-extrabold text-amber-400">Cloud workflows on GCP</span> built to scale, so systems keep running smoothly with minimal manual intervention
             </div>
             <div className="text-sm sm:text-base md:text-lg text-slate-100 leading-relaxed">
-              <span className="font-extrabold text-amber-400">Predictive models & data-driven web apps</span> — solving real problems, not just chasing applause.
+              <span className="font-extrabold text-amber-400">Predictive models & data-driven web applications</span> that solve real problems, not just impress on paper
             </div>
           </div>
 
           <p className="text-slate-200 leading-relaxed text-base sm:text-lg md:text-xl font-normal">
-            I take messy, real-world chaos and turn it into something that actually works — <strong className="text-amber-300 font-black">smart, stable, and thoda swag ke saath</strong>.
+            I take messy, real-world challenges and turn them into systems that are smart, stable, and built with intent.
           </p>
 
           <div className="pt-3">
-            <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-2xl bg-amber-500/20 border-2 border-amber-500/50 text-amber-300 font-black text-base sm:text-lg md:text-xl shadow-xl shadow-amber-500/15 tracking-wide">
-              ✨ Picture abhi baaki hai, mere dost. 🎬
+            <span className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-2xl bg-amber-500/20 border-2 border-amber-500/50 text-amber-300 font-bold text-base sm:text-lg md:text-xl shadow-xl shadow-amber-500/15 tracking-wide">
+              ✨ The best is yet to come.
             </span>
           </div>
         </div>
