@@ -66,3 +66,173 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #f59e0b;
 }
+
+/* ==========================================================================
+   PRINT / PDF STYLES - ISOLATE RESUME ONLY
+   ========================================================================== */
+@media print {
+  /* 1. Global Print Reset & Isolation */
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    text-shadow: none !important;
+    box-shadow: none !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 10.5pt !important;
+    line-height: 1.4 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 2. Hide everything on the page by default */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Hide entire page structure except printable resume */
+  nav,
+  header,
+  footer,
+  section:not(#resume-section-root),
+  .no-print,
+  button,
+  .fixed:not(.resume-modal-overlay) {
+    display: none !important;
+  }
+
+  /* 3. Make Resume Modal & Content Visible & Reset Overlay */
+  .resume-modal-overlay {
+    visibility: visible !important;
+    position: static !important;
+    inset: auto !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .resume-modal-container {
+    visibility: visible !important;
+    position: static !important;
+    background: #ffffff !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .resume-modal-topbar,
+  .resume-modal-footer {
+    display: none !important;
+  }
+
+  /* 4. Target Printable Resume Area */
+  #resume-printable-content,
+  #resume-printable-content * {
+    visibility: visible !important;
+  }
+
+  #resume-printable-content {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+  }
+
+  /* Typography & Colors for Clean Document Print */
+  #resume-printable-content h1 {
+    color: #0f172a !important;
+    font-size: 22pt !important;
+    font-weight: 900 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 4pt !important;
+  }
+
+  #resume-printable-content h2 {
+    color: #b45309 !important; /* Rich amber accent */
+    font-size: 11.5pt !important;
+    font-weight: 800 !important;
+    border-bottom: 1.5px solid #cbd5e1 !important;
+    padding-bottom: 2pt !important;
+    margin-top: 10pt !important;
+    margin-bottom: 6pt !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  #resume-printable-content h3 {
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    font-weight: 700 !important;
+  }
+
+  #resume-printable-content p,
+  #resume-printable-content span,
+  #resume-printable-content li,
+  #resume-printable-content div {
+    color: #1e293b !important;
+  }
+
+  #resume-printable-content a {
+    color: #0369a1 !important;
+    text-decoration: none !important;
+  }
+
+  #resume-printable-content .resume-card-print {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 8px !important;
+    padding: 8pt 10pt !important;
+    margin-bottom: 6pt !important;
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  #resume-printable-content .resume-badge-print {
+    background-color: #fef3c7 !important;
+    color: #92400e !important;
+    border: 1px solid #fde68a !important;
+    font-weight: 700 !important;
+    padding: 1pt 6pt !important;
+    border-radius: 4px !important;
+  }
+
+  #resume-printable-content svg {
+    color: #b45309 !important;
+    fill: currentColor !important;
+  }
+
+  #resume-printable-content .border-slate-800 {
+    border-color: #e2e8f0 !important;
+  }
+
+  @page {
+    size: A4 portrait;
+    margin: 12mm 14mm 12mm 14mm;
+  }
+}
