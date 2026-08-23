@@ -12,21 +12,21 @@ export default function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const audioRef = useRef(null);
 
-  // Robust mobile & desktop audio unlocking engine
+  // Robust universal audio engine for Desktop, Laptop, and Mobile
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = 0.3;
+    audio.volume = 0.25; // 25% comfortable ambient sound
     audio.muted = false;
 
     // Function to forcefully unlock and play audio with sound
     const forcePlayWithSound = () => {
-      if (!audio) return;
+      if (!audio || !soundEnabled) return;
       audio.muted = false;
-      audio.volume = 0.3;
+      audio.volume = 0.25;
 
-      // Resume AudioContext if available on iOS/WebKit
+      // Resume AudioContext if suspended (Web Audio API)
       const AudioContextClass = window.AudioContext || window.webkitAudioContext;
       if (AudioContextClass) {
         try {
@@ -37,11 +37,36 @@ export default function App() {
         } catch (e) {}
       }
 
-      if (soundEnabled) {
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {});
-        }
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            audio.muted = false;
+          })
+          .catch(() => {
+            // If browser blocks unmuted audio on load, start stream and unmute on mousemove/scroll
+            audio.muted = true;
+            audio.play().then(() => {
+              const unmuteImmediate = () => {
+                if (audio && soundEnabled) {
+                  audio.muted = false;
+                  audio.volume = 0.25;
+                }
+                removeUnlockListeners();
+              };
+
+              const unlockEvents = ['mousemove', 'pointermove', 'wheel', 'scroll', 'click', 'touchstart', 'keydown'];
+              unlockEvents.forEach((evt) => {
+                window.addEventListener(evt, unmuteImmediate, { capture: true, once: true });
+              });
+
+              function removeUnlockListeners() {
+                unlockEvents.forEach((evt) => {
+                  window.removeEventListener(evt, unmuteImmediate, { capture: true });
+                });
+              }
+            }).catch(() => {});
+          });
       }
     };
 
@@ -51,24 +76,42 @@ export default function App() {
       audio.pause();
     }
 
-    // Attach immediate capture triggers to all user interaction events
-    const gestureEvents = ['touchstart', 'touchend', 'pointerdown', 'pointerup', 'click', 'scroll', 'keydown'];
-    
-    const onUserInteraction = () => {
-      if (soundEnabled) {
-        forcePlayWithSound();
+    // Capture all desktop & mobile triggers (cursor move, wheel, touch, click, scroll)
+    const gestureEvents = [
+      'mousemove',
+      'pointermove',
+      'mouseenter',
+      'mouseover',
+      'wheel',
+      'scroll',
+      'click',
+      'pointerdown',
+      'pointerup',
+      'touchstart',
+      'touchend',
+      'keydown',
+      'focus'
+    ];
+
+    const onUserGesture = () => {
+      if (soundEnabled && audio) {
+        audio.muted = false;
+        audio.volume = 0.25;
+        if (audio.paused) {
+          audio.play().catch(() => {});
+        }
       }
     };
 
     gestureEvents.forEach((evt) => {
-      document.addEventListener(evt, onUserInteraction, { capture: true, passive: true });
-      window.addEventListener(evt, onUserInteraction, { capture: true, passive: true });
+      document.addEventListener(evt, onUserGesture, { capture: true, passive: true });
+      window.addEventListener(evt, onUserGesture, { capture: true, passive: true });
     });
 
     return () => {
       gestureEvents.forEach((evt) => {
-        document.removeEventListener(evt, onUserInteraction, { capture: true });
-        window.removeEventListener(evt, onUserInteraction, { capture: true });
+        document.removeEventListener(evt, onUserGesture, { capture: true });
+        window.removeEventListener(evt, onUserGesture, { capture: true });
       });
     };
   }, [soundEnabled]);
