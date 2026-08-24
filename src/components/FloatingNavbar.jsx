@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Home, User, Code2, FolderGit2, Trophy, Mail, Volume2, VolumeX, Briefcase } from 'lucide-react';
+import { Home, User, Code2, FolderGit2, Trophy, Mail, Volume2, VolumeX } from 'lucide-react';
 
 export default function FloatingNavbar({ soundEnabled, setSoundEnabled }) {
   const [activeSection, setActiveSection] = useState('home');

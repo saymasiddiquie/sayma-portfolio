@@ -17,14 +17,14 @@ export default function App() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = 0.25;
+    audio.volume = 0.02;
     audio.muted = false;
 
     // Function to play sound directly inside a genuine user activation gesture
     const playSound = () => {
       if (!audio || !soundEnabled) return;
       audio.muted = false;
-      audio.volume = 0.25;
+      audio.volume = 0.02;
 
       const playPromise = audio.play();
       if (playPromise !== undefined) {
