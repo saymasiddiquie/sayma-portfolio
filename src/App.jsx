@@ -11,20 +11,68 @@ import Footer from './components/Footer';
 export default function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
   const audioRef = useRef(null);
+  const audioCtxRef = useRef(null);
+  const gainNodeRef = useRef(null);
+  const isInitializedRef = useRef(false);
 
-  // Global reliable audio engine for all browsers (Desktop, Laptop, Mobile)
+  // Soft volume level (1.5% - 2%) that works across iOS/iPadOS, Android, and Desktop
+  const SOFT_VOLUME = 0.015;
+
+  const initWebAudio = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (!isInitializedRef.current) {
+      try {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) {
+          const ctx = new AudioContextClass();
+          const source = ctx.createMediaElementSource(audio);
+          const gainNode = ctx.createGain();
+          gainNode.gain.setValueAtTime(SOFT_VOLUME, ctx.currentTime);
+          source.connect(gainNode);
+          gainNode.connect(ctx.destination);
+
+          audioCtxRef.current = ctx;
+          gainNodeRef.current = gainNode;
+          isInitializedRef.current = true;
+        }
+      } catch (err) {
+        console.warn('Web Audio fallback:', err);
+      }
+    }
+
+    if (audioCtxRef.current && audioCtxRef.current.state === 'suspended') {
+      audioCtxRef.current.resume().catch(() => {});
+    }
+  };
+
+  // Global reliable audio engine for all browsers (Phones, Tablets, Laptops, Desktops)
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    audio.volume = 0.02;
+    audio.volume = SOFT_VOLUME;
     audio.muted = false;
+
+    if (gainNodeRef.current && audioCtxRef.current) {
+      gainNodeRef.current.gain.setValueAtTime(
+        soundEnabled ? SOFT_VOLUME : 0,
+        audioCtxRef.current.currentTime
+      );
+    }
 
     // Function to play sound directly inside a genuine user activation gesture
     const playSound = () => {
       if (!audio || !soundEnabled) return;
+
+      initWebAudio();
       audio.muted = false;
-      audio.volume = 0.02;
+      audio.volume = SOFT_VOLUME;
+
+      if (gainNodeRef.current && audioCtxRef.current) {
+        gainNodeRef.current.gain.setValueAtTime(SOFT_VOLUME, audioCtxRef.current.currentTime);
+      }
 
       const playPromise = audio.play();
       if (playPromise !== undefined) {
@@ -47,7 +95,7 @@ export default function App() {
       audio.pause();
     }
 
-    // Only genuine user activation gestures accepted by Chrome / Safari / Edge / Mobile
+    // Only genuine user activation gestures accepted by Chrome / Safari / Edge / Mobile / Tablets
     const validActivationEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
 
     const handleUserGesture = () => {
